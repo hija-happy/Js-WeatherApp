@@ -23,11 +23,11 @@ WeatherX is a simple and user-friendly application that provides real-time weath
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/weatherx.git
+   git clone https://github.com/hija-happy/Js-WeatherApp.git
     ```
 2. Open the project folder
    ```bash
-   cd weatherx
+   cd Js-WeatherApp
    ```
 3. Open ```index.html``` in your browser.
    
