@@ -1,16 +1,10 @@
-import { config } from './config.js';
-
-const apiKey = config.weatherAPIkey;
-const apiURL = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
-
-const searchBoxInput = document.querySelector('.search input');
-const searchButtun = document.querySelector('.search button');
-const weatherIcon = document.querySelector('.weather-icon');
+const baseURL = window.location.hostname === "localhost" 
+  ? "http://localhost:8888/.netlify/functions/weather"  // Local development
+  : "/.netlify/functions/weather";  // Hosted on Netlify
 
 async function checkWeather(city) {
-    const response = await fetch(apiURL + city +`&appid=${apiKey}`);
-
-    var data = await response.json();
+    const response = await fetch(`${baseURL}?city=${city}`);
+    const data = await response.json();
 
     console.log(data);
 
@@ -19,22 +13,22 @@ async function checkWeather(city) {
     document.querySelector('.humidity').innerHTML = data.main.humidity + " %";
     document.querySelector('.wind').innerHTML = data.wind.speed + " km/h";
 
-    //for dynamically changig the weather icon
-    if(data.weather[0].main == 'Clear'){
-        weatherIcon.src = "images/sun.png"
+    //for dynamically changing the weather icon
+    const weatherIcon = document.querySelector('.weather-icon');
+    if(data.weather[0].main === 'Clear'){
+        weatherIcon.src = "images/sun.png";
     }
-    else  if(data.weather[0].main == 'Clouds'){
-         weatherIcon.src = "images/cloud.png"
+    else if(data.weather[0].main === 'Clouds'){
+         weatherIcon.src = "images/cloud.png";
     }
-    else  if(data.weather[0].main == 'Rain'){
-         weatherIcon.src = "images/rain.png"
+    else if(data.weather[0].main === 'Rain'){
+         weatherIcon.src = "images/rain.png";
     }
-    else  if(data.weather[0].main == 'Drizzle'){
-         weatherIcon.src = "images/drizzle.png"
+    else if(data.weather[0].main === 'Drizzle'){
+         weatherIcon.src = "images/drizzle.png";
     }
 }
 
-searchButtun.addEventListener('click', ()=>{
-    checkWeather(searchBoxInput.value);
-})
-
+document.querySelector('.search button').addEventListener('click', ()=>{
+    checkWeather(document.querySelector('.search input').value);
+});
